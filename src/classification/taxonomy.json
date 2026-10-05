@@ -1,0 +1,63 @@
+{
+  "Payment": [
+    "failed transaction",
+    "duplicate charge",
+    "payment deducted but order failed",
+    "payment reversed",
+    "payment pending"
+  ],
+  "Delivery": [
+    "late delivery",
+    "missing package",
+    "damaged package",
+    "wrong item",
+    "delivery partner issue"
+  ],
+  "Refund": [
+    "refund delayed",
+    "refund missing",
+    "partial refund",
+    "refund status unclear"
+  ],
+  "Account": [
+    "login issue",
+    "password reset",
+    "account locked",
+    "profile issue"
+  ],
+  "Product Quality": [
+    "defective product",
+    "not as described",
+    "expired product",
+    "quality below expectation"
+  ],
+  "Fraud": [
+    "unauthorized transaction",
+    "suspicious activity",
+    "account takeover"
+  ],
+  "Technical Issue": [
+    "app crash",
+    "OTP failure",
+    "page not loading",
+    "API error",
+    "performance issue"
+  ],
+  "Subscription": [
+    "unwanted renewal",
+    "cancellation issue",
+    "billing mismatch",
+    "plan downgrade issue"
+  ],
+  "Customer Service": [
+    "no response",
+    "unhelpful agent",
+    "long wait time",
+    "rude behavior"
+  ],
+  "Other": [
+    "general feedback",
+    "feature request",
+    "miscellaneous"
+  ]
+}

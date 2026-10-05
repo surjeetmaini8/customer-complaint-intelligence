@@ -1,0 +1,137 @@
+# =========================================================================
+# Central configuration for the Customer Complaint Intelligence Platform.
+# No magic numbers should be hardcoded elsewhere - reference this file
+# via src/config.py instead.
+# =========================================================================
+
+paths:
+  raw_data: "data/raw"
+  processed_data: "data/processed"
+  knowledge_base: "data/knowledge_base"
+  generated_data: "data/generated"
+  complaints_csv: "data/generated/complaints.csv"
+  models_dir: "models"
+  classification_dir: "models/classification"
+  sentiment_dir: "models/sentiment"
+  emotion_dir: "models/emotion"
+  severity_dir: "models/severity"
+  faiss_dir: "storage/faiss"
+  database: "storage/application.db"
+  taxonomy_file: "src/classification/taxonomy.json"
+
+data_generation:
+  num_records: 10000
+  random_seed: 42
+  start_date: "2024-01-01"
+  end_date: "2024-04-30"
+  # Injected emerging-issue incidents used to demo anomaly detection
+  incidents:
+    - name: "OTP Verification Failure"
+      category: "Technical Issue"
+      subcategory: "OTP failure"
+      start: "2024-03-10 09:00:00"
+      end: "2024-03-10 15:00:00"
+      peak_multiplier: 9.0
+      platform: "Android"
+      region: "North India"
+    - name: "UPI Payment Failure Spike"
+      category: "Payment"
+      subcategory: "failed transaction"
+      start: "2024-02-14 07:00:00"
+      end: "2024-02-14 20:00:00"
+      peak_multiplier: 7.0
+      platform: "Android"
+      region: "South India"
+
+classification:
+  model_type: "tfidf_logreg"     # tfidf_logreg | transformer (see src/classification/transformer.py)
+  tfidf_max_features: 20000
+  tfidf_ngram_range: [1, 2]
+  test_size: 0.15
+  val_size: 0.15
+  top_k_alternatives: 3
+  confidence_threshold: 0.70   # below this -> human review
+
+sentiment:
+  confidence_threshold: 0.60
+  labels: ["Positive", "Neutral", "Negative"]
+
+emotion:
+  confidence_threshold: 0.55
+  labels: ["Angry", "Frustrated", "Confused", "Disappointed", "Satisfied", "Neutral"]
+
+severity:
+  levels: ["LOW", "MEDIUM", "HIGH", "CRITICAL"]
+  confidence_threshold: 0.70
+  weights:
+    sentiment: 0.20
+    emotion: 0.15
+    financial_impact: 0.25
+    fraud_risk: 0.20
+    frequency: 0.10
+    unresolved: 0.10
+  thresholds:
+    low: 0.30
+    medium: 0.55
+    high: 0.78
+  high_amount: 5000
+  critical_amount: 20000
+  model_type: "rule_based"   # rule_based | xgboost
+
+embeddings:
+  model_name: "sentence-transformers/all-MiniLM-L6-v2"  # used if sentence-transformers+weights are available
+  fallback_method: "tfidf_svd"   # used automatically when transformer embedding is unavailable
+  svd_components: 200
+  dimension: 200
+
+similarity:
+  top_k: 10
+  min_similarity: 0.35
+
+clustering:
+  method: "hdbscan"           # hdbscan | kmeans
+  min_cluster_size: 15
+  min_samples: 5
+  kmeans_fallback_k: 25
+  top_keywords: 8
+
+anomaly_detection:
+  time_bucket: "h"            # pandas offset alias (hourly)
+  rolling_window: 24
+  z_score_threshold: 2.5
+  min_volume_for_alert: 20
+  increase_percent_threshold: 100
+
+rag:
+  chunk_size: 400
+  chunk_overlap: 60
+  top_k: 4
+  min_similarity: 0.15
+
+llm:
+  provider: "openai_compatible"
+  temperature: 0.2
+  max_tokens: 900
+  root_cause_confidence_threshold: 0.70
+
+human_review:
+  category_confidence_threshold: 0.70
+  severity_confidence_threshold: 0.70
+  root_cause_confidence_threshold: 0.70
+
+api:
+  host: "0.0.0.0"
+  port: 8000
+  # Keep disabled for local development. Set API_REQUIRE_KEY=true in .env
+  # before exposing the service outside a trusted local network.
+  require_api_key: false
+  expose_original_text: true
+
+privacy:
+  # Demo default keeps the original synthetic text for the dashboard. For real
+  # customer data, set false and use masked_text for downstream processing.
+  retain_original_text: true
+
+logging:
+  level: "INFO"
+  log_file: "storage/app.log"
