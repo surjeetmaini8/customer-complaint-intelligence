@@ -1,9 +1,4 @@
-"""
-Customer Complaint Intelligence & Root-Cause Analysis Platform - Dashboard
 
-Run with:
-    streamlit run dashboard/app.py
-"""
 from __future__ import annotations
 
 import sys
