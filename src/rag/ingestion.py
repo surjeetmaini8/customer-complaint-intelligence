@@ -1,7 +1,4 @@
-"""
-Knowledge-base document ingestion: parses markdown files with YAML
-frontmatter metadata, and chunks their content for embedding/retrieval.
-"""
+
 from __future__ import annotations
 
 import re
