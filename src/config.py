@@ -1,10 +1,3 @@
-"""
-Centralized configuration loader.
-
-Loads config.yaml + environment variables (.env) once, and exposes a single
-`settings` object used throughout the codebase. This is the ONLY place that
-should read config.yaml or os.environ for application settings.
-"""
 from __future__ import annotations
 
 import os
@@ -28,8 +21,6 @@ def _load_yaml(path: Path) -> Dict[str, Any]:
 
 
 class Settings:
-    """Wraps config.yaml with convenient attribute access and env overrides."""
-
     def __init__(self):
         self._raw = _load_yaml(PROJECT_ROOT / "config.yaml")
         self.root = PROJECT_ROOT
