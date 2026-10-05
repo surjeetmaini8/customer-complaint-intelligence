@@ -1,9 +1,4 @@
-"""
-Retriever: encodes a query and returns top-k relevant knowledge-base
-chunks with metadata, using a shared embedding encoder so knowledge and
-complaint embeddings live in a comparable space (both fit at index-build
-time - see scripts/build_index.py).
-"""
+
 from __future__ import annotations
 
 from functools import lru_cache
