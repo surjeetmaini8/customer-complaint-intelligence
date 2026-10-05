@@ -1,6 +1,4 @@
-"""Shared data-access helpers for the Streamlit dashboard. Reads directly
-from the same database/modules used by the API and pipeline, so the
-dashboard and API always reflect the same underlying analysis."""
+
 from __future__ import annotations
 
 import json
