@@ -1,5 +1,3 @@
-"""Feature engineering for the severity engine (shared by rule-based and
-optional ML-based severity models)."""
 from __future__ import annotations
 
 from typing import Dict
