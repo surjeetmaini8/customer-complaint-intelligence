@@ -1,12 +1,3 @@
-"""
-Severity engine: transparent rule-based scoring by default, with an
-optional XGBoost-based ML model (config: severity.model_type).
-
-Returns LOW / MEDIUM / HIGH / CRITICAL with a numeric score, confidence,
-and human-readable reasons - severity is NEVER simply "negative sentiment
-=> high severity"; it blends financial impact, fraud/security risk,
-frequency, operational impact (unresolved status), sentiment and emotion.
-"""
 from __future__ import annotations
 
 import json
